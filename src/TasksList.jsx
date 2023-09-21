@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import Task from './Task'
+import CreateTaskInput from './CreateTaskInput'
 
 const TasksList = () => {
     const [tasks, setTasks] = useState([
@@ -12,20 +14,10 @@ const TasksList = () => {
     return (
         <>
             <div className="todo-list">
+                <CreateTaskInput />
                 <ul className="list">
                     {tasks.map(task => (
-                        <li
-                            className="list-item"
-                            key={task.id}
-                        >
-                            <input
-                                className="list-item__checkbox"
-                                type="checkbox"
-                                defaultChecked={task.done}
-                            />
-                            {task.text}
-                            <button className="list-item__delete-btn"></button>
-                        </li>
+                        <Task key={task.id} {...task} />
                     ))}
                 </ul>
             </div>

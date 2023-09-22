@@ -11,13 +11,41 @@ const TasksList = () => {
         { text: 'Buy meat', done: true, id: 5 },
     ])
 
+    const onCreate = (inputValue) => {
+        setTasks([
+            ...tasks,
+            { text: inputValue, done: false,  id: Math.random()}
+        ])
+    }
+
+    const handleTaskStatusChange = (id) => {
+        const updatedTasks = tasks.map(task => {
+            if (task.id === id) {
+                return {
+                    ...task,
+                    done: !task.done
+                }
+            }
+            return task
+        })
+        setTasks(updatedTasks)
+    }
+
+    const handleTaskDelete = (id) => {
+        const updatedTasks = tasks.filter(task => task.id !== id)
+        setTasks(updatedTasks)
+    }
+
+
+    const sortedTasks = [...tasks]
+        .sort((task1, task2) =>  (task1.done - task2.done))
     return (
         <>
             <div className="todo-list">
-                <CreateTaskInput />
+                <CreateTaskInput onCreate={onCreate} />
                 <ul className="list">
-                    {tasks.map(task => (
-                        <Task key={task.id} {...task} />
+                    {sortedTasks.map(task => (
+                        <Task key={task.id} {...task} onChange={handleTaskStatusChange} onDelete={handleTaskDelete} />
                     ))}
                 </ul>
             </div>

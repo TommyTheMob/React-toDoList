@@ -1,10 +1,11 @@
-const baseUrl = 'https://crudcrud.com/api/3c707d40ede64ef2b8b189d0abcb389a/tasks'
+const baseUrl = 'http://localhost:3001/tasks' /* local JSON server using db from server dir. */
+// const baseUrl = 'https://dzqwdg-8080.csb.app/tasks' /* codesandbox.io json-server coolest thing ever trust me */
 
-export const createTask = taskData => {
-    return fetch(baseUrl, {
+export const createTask = (taskData) => {
+    return fetch(`${baseUrl}/`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json;utf-8'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(taskData)
     }).then(response => {
@@ -23,23 +24,18 @@ export const fetchTasksList = () => {
                 throw new Error('Failed to fetch data')
             }
         })
-        .then(tasksList => tasksList.map(({_id, ...task}) => ({
-                id: _id,
-                ...task
-            }))
-        )
 }
 
 export const updateTask = (taskId, taskData) => {
     return fetch(`${baseUrl}/${taskId}`, {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json;utf-8'
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify(taskData)
     }).then(response => {
         if (!response.ok) {
-            throw new Error('Failed to create task')
+            throw new Error('Failed to delete task')
         }
     })
 }
